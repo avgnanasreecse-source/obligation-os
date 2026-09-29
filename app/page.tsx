@@ -14,6 +14,7 @@ const when = (d: number) => (d < 0 ? `${-d}d overdue` : d === 0 ? "due today" : 
 const fmt = (iso: string) => new Date(iso + "T00:00:00").toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 
 export default function Home() {
+  const [payingId, setPayingId] = useState<any>(null);
   const [items, setItems] = useState<Obligation[]>([]);
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
@@ -115,7 +116,7 @@ export default function Home() {
                   return (
                     <article key={o.id} className={`item ${lvl} ${o.done ? "done" : ""}`}>
                       <div className="top"><span>{o.title}</span><span className="pill">{o.done ? "done" : lvl}</span></div>
-                    <div className="meta">{fmt(o.dueDate)}, {when(daysLeft(o.dueDate))} · {o.category} · via {o.source}{o.amount ? ` · ₹${o.amount.toLocaleString("en-IN")}` : ""}</div>{o.done ? <span style={{ color: "#15803d", fontWeight: 600, fontSize: 13 }}>✓ Paid</span> : <button className="ghost small" onClick={() => toggle(o.id)}>Pay now</button>}
+                      <div className="meta">{fmt(o.dueDate)}, {when(daysLeft(o.dueDate))} · {o.category} · via {o.source}{o.amount ? ` · ₹${o.amount.toLocaleString("en-IN")}` : ""}</div>{o.done ? <span style={{ color: "#15803d", fontWeight: 600, fontSize: 13 }}>✓ Paid</span> : payingId === o.id ? <span style={{ color: "#b45309", fontWeight: 600, fontSize: 13 }}>Processing...</span> : <button className="ghost small" onClick={() => { setPayingId(o.id); setTimeout(() => { toggle(o.id); setPayingId(null); }, 2000); }}>Pay now</button>}
                     </article>
                   );
                 })}
