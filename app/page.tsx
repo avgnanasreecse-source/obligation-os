@@ -51,7 +51,7 @@ export default function Home() {
       const j = await r.json();
       if (!r.ok) throw new Error(j.error || "Extraction failed");
       if (!j.items.length) throw new Error("No dated obligations found. Include a due date in each message.");
-      setItems((prev) => [...prev.filter((p) => !p.id.startsWith("demo-")), ...j.items]);
+      setItems((prev) => { const base = prev.filter((p) => !p.id.startsWith("demo-")); const seen = new Set(base.map((p) => p.title + "|" + p.dueDate)); return [...base, ...j.items.filter((n: Obligation) => !seen.has(n.title + "|" + n.dueDate))]; });
       setMode(j.mode); setText("");
     } catch (e) { setError(e instanceof Error ? e.message : "Something went wrong. Try again."); }
     finally { setBusy(false); }
