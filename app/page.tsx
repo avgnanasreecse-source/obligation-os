@@ -116,7 +116,6 @@ export default function Home() {
                     <article key={o.id} className={`item ${lvl} ${o.done ? "done" : ""}`}>
                       <div className="top"><span>{o.title}</span><span className="pill">{o.done ? "done" : lvl}</span></div>
                     <div className="meta">{fmt(o.dueDate)}, {when(daysLeft(o.dueDate))} · {o.category} · via {o.source}{o.amount ? ` · ₹${o.amount.toLocaleString("en-IN")}` : ""}</div>{o.done ? <span style={{ color: "#15803d", fontWeight: 600, fontSize: 13 }}>✓ Paid</span> : <button className="ghost small" onClick={() => toggle(o.id)}>Pay now</button>}
-                    <button className="ghost small" onClick={() => toggle(o.id)}>{o.done ? "Mark as pending" : "Mark as done"}</button>
                     </article>
                   );
                 })}
