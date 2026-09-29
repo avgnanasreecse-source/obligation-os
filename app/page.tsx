@@ -115,7 +115,7 @@ export default function Home() {
                   return (
                     <article key={o.id} className={`item ${lvl} ${o.done ? "done" : ""}`}>
                       <div className="top"><span>{o.title}</span><span className="pill">{o.done ? "done" : lvl}</span></div>
-                      <div className="meta">{fmt(o.dueDate)}, {when(daysLeft(o.dueDate))} · {o.category} · via {o.source}{o.amount ? ` · ₹${o.amount.toLocaleString("en-IN")}` : ""}</div>{!o.done && <button className="ghost small" onClick={() => { window.location.href = "tez://"; }}>Pay: GPay</button>}
+                      <div className="meta">{fmt(o.dueDate)}, {when(daysLeft(o.dueDate))} · {o.category} · via {o.source}{o.amount ? ` · ₹${o.amount.toLocaleString("en-IN")}` : ""}</div>{!o.done && <button className="ghost small" onClick={() => { window.location.href = "tez://"; }}>Pay: GPay</button>}window.location.href = `upi://pay?pa=YOUR-UPI-ID&pn=Payee&am=${o.amount}&cu=INR&tn=${encodeURIComponent(o.title)}`;
                       {o.penalty && <div className="meta">If missed: {o.penalty}</div>}
                       <button className="ghost small" onClick={() => toggle(o.id)}>{o.done ? "Mark as pending" : "Mark as done"}</button>
                     </article>
